@@ -52,7 +52,7 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   react:
     driver: ${VOLUMES_DRIVER}
-    
+
 x-args-template: &args-template
  #args:
   - CHANGE_SOURCE=${CHANGE_SOURCE}
@@ -156,10 +156,10 @@ x-args-template: &args-template
 
 x-build-template: &build-template
     context: ../
-    dockerfile: ./laradock-sr/all-in-one/Dockerfile
+    dockerfile: ./laradock/all-in-one/Dockerfile
     args: *args-template
-  
-x-sr-template: &sr-template
+
+x-all-in-one-template: &all-in-one-template
   build :
     << : *build-template
   #volumes:
@@ -189,25 +189,9 @@ x-sr-template: &sr-template
     #links:
     #- docker-in-docker
 
-  
+
 services:
 
 ### All-In-One Utilities ##################################
-    sr:
-      << : *sr-template
-      
-    sr-platform:
-      << : *sr-template
-      
-    sr-report:
-      << : *sr-template
-        
-    sr-app:
-      << : *sr-template
-      
-    sr-admin:
-      <<: *sr-template
-      
-    sr-without-admin:
-      <<: *sr-template
-    
+    all-in-one:
+      << : *all-in-one-template

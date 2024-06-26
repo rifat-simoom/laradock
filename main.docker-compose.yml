@@ -1,0 +1,8 @@
+services:
+
+### All-In-One Utilities ##################################
+    all-in-one:
+      build : 
+        args :
+          - PHP_UPSTREAM_CONTAINER=${ALL_IN_ONE_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=*

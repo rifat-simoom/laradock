@@ -23,7 +23,7 @@ LABEL maintainer="Rifat Simoom <rifat-simoomk@users.noreply.github.com>"
 ARG LARADOCK_PHP_VERSION
 # Set Environment Variables
 ENV DEBIAN_FRONTEND noninteractive
-ARG ALL_IN_ONE_DATA_PATH=./laradock-sr/all-in-one
+ARG ALL_IN_ONE_DATA_PATH=./laradock/all-in-one
 ARG ALL_IN_ONE_DATA_APPLICATON_PATH=/softrobotics
 ARG APP_ENVIRONMENT=*
 
@@ -194,7 +194,7 @@ USER root
 RUN if [ "$APP_ENVIRONMENT" = "*" ] || [ "$APP_ENVIRONMENT" = "report" ] || [ "$APP_ENVIRONMENT" = "platform" ]; then \
         docker-service-enable cron; \
     fi
-    
+
 COPY  ${ALL_IN_ONE_DATA_PATH}/crontab /etc/cron.d
 
 
@@ -202,7 +202,7 @@ RUN if [ "$APP_ENVIRONMENT" = "platform" ]; then \
         rm -rf /etc/cron.d/report && \
         rm -rf /etc/cron.d/everything; \
     fi
-    
+
 RUN if [ "$APP_ENVIRONMENT" = "report" ]; then \
         rm -rf /etc/cron.d/platform && \
         rm -rf /etc/cron.d/everything; \
@@ -238,12 +238,12 @@ RUN if [ "$APP_ENVIRONMENT" = "platform" ]; then \
         rm -rf /opt/docker/etc/supervisor.d/report.sr.conf && \
         rm -rf /opt/docker/etc/supervisor.d/everything.sr.conf; \
     fi
-    
+
 RUN if [ "$APP_ENVIRONMENT" = "report" ]; then \
         rm -rf /opt/docker/etc/supervisor.d/platform.sr.conf && \
         rm -rf /opt/docker/etc/supervisor.d/everything.sr.conf; \
     fi
-    
+
 RUN if [ "$APP_ENVIRONMENT" = "*" ]; then \
         rm -rf /opt/docker/etc/supervisor.d/report.sr.conf && \
         rm -rf /opt/docker/etc/supervisor.d/platform.sr.conf; \

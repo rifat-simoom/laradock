@@ -1,0 +1,14 @@
+
+x-dev-volume-template : &dev-volume-template
+  - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+
+services:
+
+    ### All-In-One Utilities ##################################
+    all-in-one:
+      build : 
+        args :
+          - PHP_UPSTREAM_CONTAINER=${ALL_IN_ONE_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=*
+          - COPY_SOURCE=no_copy
+      volumes: *dev-volume-template

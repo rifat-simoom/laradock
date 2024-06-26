@@ -10,7 +10,7 @@ This documentation provides a detailed explanation of the Docker Compose service
   - `../`: The build context is set to the parent directory of the Docker Compose file.
 
 - **Dockerfile:**
-  - `./laradock-sr/all-in-one/Dockerfile`: Specifies the path to the Dockerfile relative to the build context.
+  - `./laradock/all-in-one/Dockerfile`: Specifies the path to the Dockerfile relative to the build context.
 
 ### Build Arguments
 
