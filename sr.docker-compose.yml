@@ -1,0 +1,44 @@
+services:
+
+### All-In-One Utilities ##################################
+    sr:
+      build : 
+        args :
+          - PHP_UPSTREAM_CONTAINER=${SR_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=*
+            
+    
+    
+    sr-platform:
+      build :
+        args :
+          - PHP_UPSTREAM_CONTAINER=${SR_PLATFORM_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=platform
+    
+    sr-report:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_REPORT_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=report
+    
+    
+    sr-app:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_APP_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=app
+    
+    
+    sr-admin:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_ADMIN_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=admin
+    
+    
+    
+    sr-without-admin:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_WITHOUT_ADMIN_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=without-admin

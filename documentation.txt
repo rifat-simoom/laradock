@@ -1,0 +1,107 @@
+# Docker Compose Service Documentation
+
+This documentation provides a detailed explanation of the Docker Compose service configuration for an `all-in-one` PHP-Apache container using the provided Dockerfile. The service is defined within a Docker Compose file and builds the Docker image from the specified context and Dockerfile. Below, we break down each part of the configuration:
+
+## Service Definition: `all-in-one`
+
+### Build Configuration
+
+- **Context:**
+  - `../`: The build context is set to the parent directory of the Docker Compose file.
+
+- **Dockerfile:**
+  - `./laradock-sr/all-in-one/Dockerfile`: Specifies the path to the Dockerfile relative to the build context.
+
+### Build Arguments
+
+The build process accepts several arguments to customize the PHP environment and installed extensions. These arguments can be passed dynamically via environment variables. Here's a summary of key build arguments:
+
+- **PHP Version and Source:**
+  - `CHANGE_SOURCE`: Toggle to change the software source.
+  - `BASE_IMAGE_TAG_PREFIX`: Prefix for the base image tag.
+  - `LARADOCK_PHP_VERSION`: Specifies the PHP version.
+  - `LARADOCK_PHALCON_VERSION`: Specifies the Phalcon version.
+
+- **PHP Extensions:**
+  - Installation flags for various PHP extensions such as `INSTALL_BZ2`, `INSTALL_ENCHANT`, `INSTALL_GMP`, etc.
+  - Additional specific flags for certain PHP features like `XDEBUG_PORT`, `PG_CLIENT_VERSION`, `WKHTMLTOPDF_VERSION`, etc.
+
+- **Locale and User Configuration:**
+  - `PUID` and `PGID`: User and group IDs for setting up a non-root user.
+  - `LOCALE`: Specifies the locale for the container.
+
+- **Apache Configuration:**
+  - `PHP_UPSTREAM_CONTAINER`, `PHP_UPSTREAM_PORT`, `PHP_UPSTREAM_TIMEOUT`: Settings for PHP upstream container.
+  - `DOCUMENT_ROOT`: Document root for the Apache server.
+  - `APACHE_INSTALL_HTTP2`: Flag to enable HTTP2 in Apache.
+
+- **Paths:**
+  - `ALL_IN_ONE_DATA_PATH`: Path to additional data for the build process.
+  - `ALL_IN_ONE_DATA_APPLICATON_PATH`: Path to the application data.
+
+### Volumes
+
+Defines volume mappings between the host and the container:
+
+- `docker-in-docker:/certs/client`: Mounts Docker certificates.
+- `${APACHE_HOST_LOG_PATH}:/var/log/apache2`: Maps Apache logs.
+- `${APACHE_SITES_PATH}:/etc/apache2/sites-available`: Maps Apache sites configuration.
+- `${APACHE_SSL_PATH}:/etc/apache2/ssl`: Maps Apache SSL configuration.
+
+### Ports
+
+- `80`: Maps to `${APACHE_HOST_HTTP_PORT}` on the host.
+- `443`: Maps to `${APACHE_HOST_HTTPS_PORT}` on the host.
+
+### Expose
+
+- `9000`: Exposes port 9000 within the container for PHP-FPM.
+
+### Extra Hosts
+
+- `dockerhost:${DOCKER_HOST_IP}`: Adds an extra host entry for Docker in Docker setup.
+
+### Environment Variables
+
+Defines environment variables for the container:
+
+- `PHP_IDE_CONFIG`: Configuration for PHP IDE.
+- `DOCKER_HOST`, `DOCKER_TLS_VERIFY`, `DOCKER_TLS_CERTDIR`, `DOCKER_CERT_PATH`: Settings for Docker client within the container.
+- `FAKETIME`: Specifies a fake time configuration for PHP.
+
+### Networks
+
+The container is connected to two networks:
+
+- `frontend`
+- `backend`
+
+### Links
+
+- `docker-in-docker`: Links the `all-in-one` service to a `docker-in-docker` service.
+
+## Dockerfile: Summary
+
+The Dockerfile used in this configuration sets up a PHP-Apache environment with the following features:
+
+- **Base Image:** `webdevops/php-apache:8.1`
+- **PHP Configuration:** Custom PHP settings, including various extensions.
+- **Supervisor and Crontab:** Process management and scheduled tasks.
+- **Apache Configuration:** Virtual host and other Apache settings.
+- **Permissions:** Ensures correct permissions for Laravel application directories.
+- **Startup Scripts:** Custom scripts for initializing the container.
+
+### Key Steps in the Dockerfile:
+
+1. **Environment Setup:** Configure environment variables and ARGs for building.
+2. **Application Code and PHP Config:**
+   - Add application code to `/var/www/`.
+   - Copy PHP and Laravel configuration files.
+3. **User Configuration:** Set up non-root user with specific UID and GID.
+4. **Apache Configuration:** Set up virtual hosts and other Apache settings.
+5. **Permissions:** Set proper permissions for Laravel storage and cache directories.
+6. **Startup:** Define entry points and commands for container initialization.
+
+## Conclusion
+
+This configuration sets up a robust PHP-Apache environment for a Laravel application, with extensive customization options for PHP extensions, user settings, and application paths. The use of Docker Compose allows for easy orchestration and management of the container, ensuring a smooth development and deployment process.

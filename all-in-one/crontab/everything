@@ -1,0 +1,5 @@
+#* * * * * laradock /usr/bin/php /var/www/artisan schedule:run >> /dev/null 2>&1
+# Custom cron
+#* * * * * root echo "Every Minute" > /var/log/cron.log 2>&1
+#* * * * * root /bin/echo Hello from `date` >> /tmp/logs/cron.log
+* * * * * www-data /usr/local/bin/php /var/www/ccpayment/artisan update:incomingWallet 

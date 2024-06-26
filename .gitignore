@@ -1,0 +1,4 @@
+/.env
+/.idea/*
+/logs/apache2/access.log
+/logs/*

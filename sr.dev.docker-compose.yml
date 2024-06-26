@@ -1,0 +1,59 @@
+
+x-dev-volume-template : &dev-volume-template
+  - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+
+services:
+
+    ### All-In-One Utilities ##################################
+    sr:
+      build : 
+        args :
+          - PHP_UPSTREAM_CONTAINER=${SR_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=*
+          - COPY_SOURCE=no_copy
+      volumes: *dev-volume-template      
+    
+    
+    sr-platform:
+      build :
+        args :
+          - PHP_UPSTREAM_CONTAINER=${SR_PLATFORM_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=platform
+          - COPY_SOURCE=no_copy
+      volumes: *dev-volume-template
+    
+    sr-report:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_REPORT_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=report
+          - COPY_SOURCE=no_copy
+      volumes: *dev-volume-template
+    
+    
+    sr-app:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_APP_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=app
+          - COPY_SOURCE=no_copy
+      volumes: *dev-volume-template
+    
+    
+    sr-admin:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_ADMIN_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=admin
+          - COPY_SOURCE=no_copy
+      volumes: *dev-volume-template
+    
+    
+    
+    sr-without-admin:
+      build:
+        args:
+          - PHP_UPSTREAM_CONTAINER=${SR_WITHOUT_ADMIN_APACHE_PHP_UPSTREAM_CONTAINER}
+          - APP_ENVIRONMENT=without-admin
+          - COPY_SOURCE=no_copy
+      volumes: *dev-volume-template      
